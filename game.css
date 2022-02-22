@@ -1,0 +1,26 @@
+* {
+    margin : 0;
+}
+
+.cars {
+    width : 30px;
+    height : 30px;
+    position : absolute;
+}
+
+button {
+    position : fixed;
+    right : 0;
+    bottom : 0;
+}
+
+#car1 {
+    background-color: orange;
+    border: solid 4px red;
+}
+
+#car2 {
+    background-color: green;
+    top : 100px;
+    border : solid 4px blue;
+}
