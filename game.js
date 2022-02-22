@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let INTERVAL1, INTERVAL2;
 
     BTN.addEventListener('click', function() {
+        BTN.disabled = true;
         startRace();
     });
 
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearInterval(INTERVAL1);
                 clearInterval(INTERVAL2);
                 alert(`${ele.getAttribute("id")} wins!!`);
+                BTN.disabled = false;
                 return;
             }
 
