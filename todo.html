@@ -8,13 +8,24 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>The todo list in currently empty</h3>
+    <h3></h3>
     <ol></ol>
 
-    <form action="">
+    <!-- form for adding a todo-->
+    <form action="" id="add-todo">
         <label for="item">Write down the item: </label><br>
-        <input type="text" name="" id=""><br>
+        <input type="text"><br>
         <input type="submit" value="Add item">
+    </form>
+
+    <hr>
+
+    <!-- form for removing a todo -->
+    <form action="" id="delete-todo">
+        <h4>To remove a todo, type in its number and hit enter or click the remove button: </h4>
+        <p class="note"></p>
+        <input type="number" min="1" id="index-delete"><br>
+        <input type="submit" value="Remove">
     </form>
 
     <h3 id="done-items"></h3>
