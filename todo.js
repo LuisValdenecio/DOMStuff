@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    const DATA_BASE = localStorage;
+    const TODO_ITEMS = [];
 
     let todoList = document.querySelector('ol');
     let noTodoListTitle = document.querySelector('h3');
@@ -16,14 +16,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // remove todo
     removeTodoForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
         let indxToDelete = document.querySelector('#index-delete');
-        let liToDelete = todoList.children[indxToDelete.value - 1];
-        todoList.removeChild(liToDelete);
 
-        if (todoList.children.length == 0) {
-            removeTodoForm.style.display = "none";
+        try {
+            let liToDelete = todoList.children[indxToDelete.value - 1];
+                
+            //liToDelete.click();
+        
+            todoList.removeChild(liToDelete);
+                        
+            if (todoList.children.length == 0) {
+                removeTodoForm.style.display = "none";
+            }
+        } catch(e) {
+            alert('choose a valid todo index');
         }
+       
+        noTodoListTitle.innerText = `The todo items are: ${todoList.children.length}`;
     });
 
     // add todo
@@ -34,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let liElement = document.createElement('li');
             liElement.innerHTML = inputElement.value;
             todoList.appendChild(liElement);
+
             inputElement.value = "";
 
             if (todoList.children.length > 0) {
