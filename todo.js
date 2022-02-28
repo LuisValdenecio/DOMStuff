@@ -20,9 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             let liToDelete = todoList.children[indxToDelete.value - 1];
-                
-            //liToDelete.click();
-        
+
+            if (liToDelete.style['text-decoration'] == "line-through") {
+                TOTAL_OF_DONE_ITEMS--;
+                total_of_done_items.innerText = `Finished Items : ${TOTAL_OF_DONE_ITEMS}`;
+            }
+                    
             todoList.removeChild(liToDelete);
                         
             if (todoList.children.length == 0) {
