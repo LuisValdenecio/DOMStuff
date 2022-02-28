@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         let indxToDelete = document.querySelector('#index-delete');
 
-        try {
+        try {   
             let liToDelete = todoList.children[indxToDelete.value - 1];
 
             if (liToDelete.style['text-decoration'] == "line-through") {
@@ -27,6 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
                     
             todoList.removeChild(liToDelete);
+
+            // reset the id of elements
+            for (let i = 0; i < todoList.children.length; i++) {
+                todoList.children[i].setAttribute('id', i);
+            }
                         
             if (todoList.children.length == 0) {
                 removeTodoForm.style.display = "none";
@@ -44,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (inputElement.value != "") {
             let liElement = document.createElement('li');
+            liElement.setAttribute('id', todoList.children.length);
             liElement.innerHTML = inputElement.value;
             todoList.appendChild(liElement);
 
