@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('todo', JSON.stringify(TODO_ITEMS));
             /*//////////////////////////////////////////////// */ 
 
+            total_of_done_items.innerText = `Finished Items : ${TODO_ITEMS.filter(ele => ele.style == "line-through").length}`;
+
             todoList.removeChild(liToDelete);
 
             // reset the id of elements
@@ -103,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     /*//////////////////////////////////////////////// */ 
                 }
 
-                total_of_done_items.innerText = `Finished Items : ${TOTAL_OF_DONE_ITEMS}`;
+                total_of_done_items.innerText = `Finished Items : ${TODO_ITEMS.filter(ele => ele.style == "line-through").length}`;
             });
         }   
 
@@ -113,14 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*//////////// HELPER FUNCTIONS ////////////// */
     function reconstructLiElements() {
-
-        debugger
-
         let liElements = JSON.parse(localStorage.getItem('todo'));
-        let finisheItems = 0;
 
         if (liElements) {
-            TOTAL_OF_DONE_ITEMS = liElements.filter(ele => ele.style == "line-through").length;
             TODO_ITEMS = liElements;
             
             for (let i = 0; i < liElements.length; i++) {
@@ -133,12 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 /*/////// add a click event /////// */
                 li.addEventListener('click', function(e){
 
-                    debugger
-                    console.log(liElements)
-
                     if (li.style['text-decoration'] == "line-through") {
                         li.style['text-decoration'] = "";
-                        TOTAL_OF_DONE_ITEMS--;
 
                         /*//////// update the todo to the localStorage ////////*/
                             TODO_ITEMS[li.getAttribute('id')].style = '';
@@ -147,23 +140,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         li.style['text-decoration'] = "line-through";
                         
-                        TOTAL_OF_DONE_ITEMS++;
-
                         /*//////// update the todo to the localStorage ////////*/
                             TODO_ITEMS[li.getAttribute('id')].style = 'line-through';
                             localStorage.setItem('todo', JSON.stringify(TODO_ITEMS));
                         /*//////////////////////////////////////////////// */     
                     }
 
-                    total_of_done_items.innerText = `Finished Items : ${TOTAL_OF_DONE_ITEMS}`;
+                    total_of_done_items.innerText = `Finished Items : ${liElements.filter(ele => ele.style == "line-through").length}`;
                 });
 
                 todoList.appendChild(li);
-
-                if (liElements[i].style == "line-through") finisheItems++;
             }
         
-            total_of_done_items.innerText = `Finished Items : ${finisheItems}`;
+            total_of_done_items.innerText = `Finished Items : ${liElements.filter(ele => ele.style == "line-through").length}`;
         }
     }
 
