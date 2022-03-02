@@ -14,10 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
         reconstructLiElements();
     /*/////////////////////////////////////////////////////////// */ 
 
+    if (todoList.children.length > 0) {
+        removeTodoForm.style.display = 'block';
+        document.querySelector('.note').innerText = `For example to delete 
+            \"${todoList.children[0].innerText}\", type in 1. (Make sure the input bellow is selected before hitting enter)`
+    }
+
     removeTodoForm.style.display = todoList.children.length == 0 ? 'none' : 'display';
 
-
-    noTodoListTitle.innerText = `The todo items are: ${TOTAL_OF_DONE_ITEMS}`;
+    noTodoListTitle.innerText = `The todo items are: ${todoList.children.length}`;
 
     // remove todo
     removeTodoForm.addEventListener('submit', function(e) {
@@ -26,11 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {   
             let liToDelete = todoList.children[indxToDelete.value - 1];
-
-            if (liToDelete.style['text-decoration'] == "line-through") {
-                TOTAL_OF_DONE_ITEMS--;
-                total_of_done_items.innerText = `Finished Items : ${TOTAL_OF_DONE_ITEMS}`;
-            }
                     
             /*//////// remove the todo to the localStorage ////////*/
                 TODO_ITEMS.splice(liToDelete.getAttribute('id'), 1);
@@ -64,6 +64,12 @@ document.addEventListener('DOMContentLoaded', function() {
             liElement.innerText = inputElement.value;
             todoList.appendChild(liElement);
 
+            if (todoList.children.length > 0) {
+                removeTodoForm.style.display = 'block';
+                document.querySelector('.note').innerText = `For example to delete 
+                    \"${todoList.children[0].innerText}\", type in 1. (Make sure the input bellow is selected before hitting enter)`
+            }
+
             /*//////// update the todo to the localStorage ////////*/
                 TODO_ITEMS.push({
                     ele : 'li',
@@ -75,12 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
             /*//////////////////////////////////////////////// */   
 
             inputElement.value = "";
-
-            if (todoList.children.length > 0) {
-                removeTodoForm.style.display = 'block';
-                document.querySelector('.note').innerText = `For example to delete 
-                    \"${todoList.children[0].innerText}\", type in 1. (Make sure the input bellow is selected before hitting enter)`
-            }
 
             // add the event to the li element  
             liElement.addEventListener('click', function(e) {
@@ -113,11 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*//////////// HELPER FUNCTIONS ////////////// */
     function reconstructLiElements() {
+
+        debugger
+
         let liElements = JSON.parse(localStorage.getItem('todo'));
         let finisheItems = 0;
-        
+
         if (liElements) {
-            TOTAL_OF_DONE_ITEMS = liElements.length;
+            TOTAL_OF_DONE_ITEMS = liElements.filter(ele => ele.style == "line-through").length;
             TODO_ITEMS = liElements;
             
             for (let i = 0; i < liElements.length; i++) {
@@ -131,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 li.addEventListener('click', function(e){
 
                     debugger
+                    console.log(liElements)
 
                     if (li.style['text-decoration'] == "line-through") {
                         li.style['text-decoration'] = "";
@@ -150,6 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             localStorage.setItem('todo', JSON.stringify(TODO_ITEMS));
                         /*//////////////////////////////////////////////// */     
                     }
+
+                    total_of_done_items.innerText = `Finished Items : ${TOTAL_OF_DONE_ITEMS}`;
                 });
 
                 todoList.appendChild(li);
